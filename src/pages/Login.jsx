@@ -16,7 +16,6 @@ function Login() {
 
   return (
     <div>
-      <Navbar />
       <div style={{ maxWidth: "400px", margin: "80px auto" }}>
         <h2>Iniciar sesión</h2>
         <form onSubmit={handleSubmit}>

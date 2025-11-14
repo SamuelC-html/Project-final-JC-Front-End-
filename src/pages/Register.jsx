@@ -17,7 +17,6 @@ function Register() {
 
   return (
     <div>
-      <Navbar />
       <div style={{ maxWidth: "400px", margin: "80px auto" }}>
         <h2>Crear cuenta</h2>
         <form onSubmit={handleSubmit}>

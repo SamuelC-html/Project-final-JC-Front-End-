@@ -76,3 +76,26 @@ export function logoutUser() {
   localStorage.removeItem("token");
   localStorage.removeItem("userId");
 }
+
+// 🔍 Verificar si el token del usuario es válido
+export async function verifyToken() {
+  const token = localStorage.getItem("token");
+  if (!token) return false;
+
+  try {
+    const res = await fetch("http://localhost:3000/api/users/verify", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) return false;
+
+    const data = await res.json();
+    return data.valid === true;
+  } catch (error) {
+    console.error("❌ Error verificando token:", error);
+    return false;
+  }
+}

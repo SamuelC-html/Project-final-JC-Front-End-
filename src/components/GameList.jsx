@@ -1,75 +1,109 @@
-import { useEffect, useState } from "react";
-import api from "../services/api";
-import "./GameList.css"; // 👈 Importamos los estilos
+import { useState, useEffect } from "react";
 
-const GameList = ({ onEdit }) => {
+function GameList({ onEdit }) {
   const [games, setGames] = useState([]);
+
+  const fetchGames = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const res = await fetch("http://localhost:3000/api/games", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      setGames(data);
+    } catch (error) {
+      console.error("❌ Error al obtener juegos:", error);
+    }
+  };
 
   useEffect(() => {
     fetchGames();
   }, []);
 
-  const fetchGames = async () => {
-    try {
-      const res = await api.get("/games");
-      setGames(res.data);
-    } catch (error) {
-      console.error("Error al obtener los juegos:", error.message);
-    }
-  };
+  const handleDelete = async (id) => {
+    const confirmDelete = confirm("¿Eliminar este juego?");
+    if (!confirmDelete) return;
 
-  const deleteGame = async (id) => {
-    if (!confirm("¿Seguro que deseas eliminar este juego?")) return;
+    const token = localStorage.getItem("token");
     try {
-      await api.delete(`/games/${id}`);
-      fetchGames();
+      const res = await fetch(`http://localhost:3000/api/games/${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        setGames((prev) => prev.filter((game) => game._id !== id));
+      }
     } catch (error) {
-      console.error("Error al eliminar el juego:", error.message);
+      console.error("❌ Error al eliminar:", error);
     }
   };
 
   return (
-    <div className="games-container">
-      <h2 className="games-title">🎮 Mi Biblioteca de Juegos</h2>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+        gap: "20px",
+        padding: "20px",
+      }}
+    >
+      {games.length === 0 ? (
+        <p style={{ textAlign: "center", color: "#999" }}>
+          No hay juegos en tu biblioteca.
+        </p>
+      ) : (
+        games.map((game) => (
+          <div
+            key={game._id}
+            style={{
+              backgroundColor: "#111",
+              border: "2px solid #00ff66",
+              borderRadius: "10px",
+              padding: "15px",
+              color: "#0f0",
+              textAlign: "center",
+            }}
+          >
+            {game.imagen && (
+              <img
+                src={game.imagen}
+                alt={game.titulo}
+                style={{
+                  width: "100%",
+                  height: "150px",
+                  objectFit: "cover",
+                  borderRadius: "6px",
+                  marginBottom: "10px",
+                }}
+              />
+            )}
 
-      <div className="games-grid">
-        {games.length === 0 ? (
-          <p>No hay juegos agregados todavía.</p>
-        ) : (
-          games.map((game) => (
-            <div key={game._id} className="game-card">
-              {game.imagen && (
-                <img
-                  src={game.imagen}
-                  alt={game.titulo}
-                  className="game-image"
-                />
-              )}
-              <h3>{game.titulo}</h3>
-              <p>{game.descripcion}</p>
-              <p><b>Género:</b> {game.genero}</p>
-              <p><b>Plataforma:</b> {game.plataforma}</p>
+            <h3>{game.titulo}</h3>
+            <p>{game.descripcion}</p>
+            <p>
+              <strong>Plataforma:</strong> {game.plataforma || "N/A"}
+            </p>
+            <p>
+              <strong>Horas:</strong> {game.horasJugadas || 0}
+            </p>
+            <p>
+              <strong>⭐ Calificación:</strong> {game.calificacion || 0}
+            </p>
+            <p>
+              <strong>Completado:</strong> {game.completado ? "✅ Sí" : "❌ No"}
+            </p>
 
-              <div className="game-buttons">
-                <button
-                  onClick={() => onEdit(game)}
-                  className="btn-edit"
-                >
-                  ✏️ Editar
-                </button>
-                <button
-                  onClick={() => deleteGame(game._id)}
-                  className="btn-delete"
-                >
-                  🗑️ Eliminar
-                </button>
-              </div>
+            <div style={{ marginTop: "10px", display: "flex", gap: "10px", justifyContent: "center" }}>
+              <button onClick={() => onEdit(game)}>Editar</button>
+              <button onClick={() => handleDelete(game._id)}>Eliminar</button>
             </div>
-          ))
-        )}
-      </div>
+          </div>
+        ))
+      )}
     </div>
   );
-};
+}
 
 export default GameList;
