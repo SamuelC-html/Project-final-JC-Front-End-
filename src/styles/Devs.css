@@ -1,0 +1,133 @@
+/* ===== DEVS PAGE STYLES ===== */
+
+.devs-page {
+  min-height: 100vh;
+  padding: 120px 40px 60px;
+  background: #050505;
+  color: #e5e5e5;
+}
+
+.devs-title {
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #00ff7f;
+  text-shadow: 0 0 10px #00ff7f;
+  margin-bottom: 60px;
+}
+
+/* GRID */
+.devs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* PROFILE CARD */
+.devs-profile {
+  background: rgba(0, 255, 130, 0.05);
+  border: 1px solid rgba(0, 255, 130, 0.3);
+  border-radius: 16px;
+  padding: 35px 25px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 12px rgba(0, 255, 130, 0.15);
+  transition: 0.25s ease;
+  cursor: default;
+}
+
+.devs-profile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(0, 255, 130, 0.35);
+  border-color: rgba(0, 255, 130, 0.6);
+}
+
+/* IMAGE */
+.devs-img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #00ff7f;
+  box-shadow: 0 0 12px #00ff7f;
+  margin-bottom: 20px;
+}
+
+/* NAME */
+.devs-profile h2 {
+  font-size: 1.6rem;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+/* ROLE */
+.devs-profile p:nth-child(3) {
+  color: #00ff7f;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+/* DESCRIPTION */
+.devs-profile p:nth-child(4) {
+  font-size: 0.9rem;
+  color: #d0d0d0;
+  line-height: 1.45rem;
+}
+
+/* SOCIAL ICONS */
+.devs-socials {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.devs-socials img {
+  width: 28px;
+  height: 28px;
+  filter: invert(88%) sepia(60%) saturate(900%) hue-rotate(80deg);
+  opacity: 0.9;
+  transition: 0.25s ease;
+}
+
+.devs-socials img:hover {
+  transform: scale(1.15);
+  opacity: 1;
+  filter: drop-shadow(0 0 6px #00ff7f);
+}
+
+/* BACK BUTTON */
+.devs-back-container {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.devs-back-btn {
+  padding: 12px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #00ff7f;
+  border: 1px solid #00ff7f;
+  background: rgba(0, 255, 130, 0.08);
+  font-weight: 600;
+  transition: 0.25s ease;
+  display: inline-block;
+}
+
+.devs-back-btn:hover {
+  background: rgba(0, 255, 130, 0.18);
+  box-shadow: 0 0 12px #00ff7f;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .devs-title {
+    font-size: 2.2rem;
+  }
+
+  .devs-page {
+    padding: 100px 20px 50px;
+  }
+}

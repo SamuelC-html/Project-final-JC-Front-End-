@@ -52,3 +52,27 @@ input {
   width: 100%;
   margin-top: 8px;
 }
+
+/* Custom scrollbar (WebKit) */
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.18); /* oscuro, semi-transparente */
+  border-radius: 12px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(0,255,102,0.28), rgba(0,255,102,0.12));
+  border-radius: 12px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,255,102,0.28) rgba(0,0,0,0.18);
+}

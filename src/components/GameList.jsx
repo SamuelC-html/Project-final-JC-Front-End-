@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import "./GameList.css";
 
-function GameList({ onEdit }) {
+function GameList({ onEdit, query }) {
   const [games, setGames] = useState([]);
 
   const fetchGames = async () => {
@@ -23,81 +24,78 @@ function GameList({ onEdit }) {
   }, []);
 
   const handleDelete = async (id) => {
-    const confirmDelete = confirm("¿Eliminar este juego?");
-    if (!confirmDelete) return;
+    if (!confirm("¿Eliminar este juego?")) return;
 
     const token = localStorage.getItem("token");
+
     try {
       const res = await fetch(`http://localhost:3000/api/games/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
+
       if (res.ok) {
         setGames((prev) => prev.filter((game) => game._id !== id));
       }
     } catch (error) {
-      console.error("❌ Error al eliminar:", error);
+      console.error("❌ Error:", error);
     }
   };
 
+  // 🔍 Filtrado limpio y eficiente
+  const filteredGames = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return games;
+    return games.filter((game) =>
+      game.titulo.toLowerCase().includes(q)
+    );
+  }, [games, query]);
+
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-        gap: "20px",
-        padding: "20px",
-      }}
-    >
-      {games.length === 0 ? (
-        <p style={{ textAlign: "center", color: "#999" }}>
-          No hay juegos en tu biblioteca.
-        </p>
+    <div className="game-list-container">
+      {filteredGames.length === 0 ? (
+        <p className="empty-list-text">No hay juegos que coincidan con la búsqueda.</p>
       ) : (
-        games.map((game) => (
-          <div
-            key={game._id}
-            style={{
-              backgroundColor: "#111",
-              border: "2px solid #00ff66",
-              borderRadius: "10px",
-              padding: "15px",
-              color: "#0f0",
-              textAlign: "center",
-            }}
-          >
+        filteredGames.map((game) => (
+          <div key={game._id} className="game-card">
             {game.imagen && (
-              <img
-                src={game.imagen}
-                alt={game.titulo}
-                style={{
-                  width: "100%",
-                  height: "150px",
-                  objectFit: "cover",
-                  borderRadius: "6px",
-                  marginBottom: "10px",
-                }}
-              />
+              <img src={game.imagen} alt={game.titulo} className="game-image" />
             )}
 
-            <h3>{game.titulo}</h3>
-            <p>{game.descripcion}</p>
-            <p>
+            <h3 className="game-title">{game.titulo}</h3>
+
+            {game.descripcion && (
+              <p className="game-description">{game.descripcion}</p>
+            )}
+
+            <p className="game-detail">
               <strong>Plataforma:</strong> {game.plataforma || "N/A"}
             </p>
-            <p>
-              <strong>Horas:</strong> {game.horasJugadas || 0}
+            <p className="game-detail">
+              <strong>Horas jugadas:</strong> {game.horasJugadas || 0}
             </p>
-            <p>
-              <strong>⭐ Calificación:</strong> {game.calificacion || 0}
+            <p className="game-detail">
+              <strong>Calificación:</strong> ⭐ {game.calificacion || 0}
             </p>
-            <p>
-              <strong>Completado:</strong> {game.completado ? "✅ Sí" : "❌ No"}
+            <p className="game-detail">
+              <strong>Completado:</strong>{" "}
+              {game.completado ? "✅ Sí" : "❌ No"}
             </p>
 
-            <div style={{ marginTop: "10px", display: "flex", gap: "10px", justifyContent: "center" }}>
-              <button onClick={() => onEdit(game)}>Editar</button>
-              <button onClick={() => handleDelete(game._id)}>Eliminar</button>
+            <div className="game-actions">
+              <button
+                className="button-primary"
+                onClick={() => onEdit(game)}
+              >
+                Editar
+              </button>
+
+              <button
+                className="button-primary button-danger"
+                onClick={() => handleDelete(game._id)}
+              >
+                Eliminar
+              </button>
             </div>
           </div>
         ))

@@ -1,48 +1,135 @@
 /* 🎨 Variables de color */
 :root {
-  --color-bg: #f9f9f9;
-  --color-text: #222;
-  --color-card-bg: #fff;
-  --color-border: #ccc;
+  --color-bg: #f3f4f6;
+  --color-text: #1f2937;
+  --color-card-bg: #ffffff;
+  --color-border: #d1d5db;
   --color-accent: #4caf50;
+  --color-accent-dark: #3c8c40;
   --color-danger: #e53935;
+
+  --shadow-soft: 0 4px 14px rgba(0,0,0,0.08);
+  --radius: 14px;
 }
 
 /* 🌙 Modo oscuro */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #121212;
-    --color-text: #eaeaea;
-    --color-card-bg: #1e1e1e;
+    --color-bg: #0f0f0f;
+    --color-text: #e5e5e5;
+    --color-card-bg: #1a1a1a;
     --color-border: #333;
-    --color-accent: #66bb6a;
-    --color-danger: #ef5350;
+    --shadow-soft: 0 4px 20px rgba(0,0,0,0.4);
   }
 }
 
-/* 💻 Estilos base */
+/* 🌐 Base general */
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: "Poppins", "Segoe UI", Tahoma, sans-serif;
   margin: 0;
-  transition: background-color 0.3s, color 0.3s;
-  line-height: 1.6;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  transition: background 0.3s, color 0.3s;
 }
 
+/* 📦 Contenedor principal */
 .app-container {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 25px;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-/* 🎮 Título principal */
+/* 🎮 Título */
 .main-title {
   text-align: center;
-  font-size: 2.2em;
-  font-weight: 700;
-  letter-spacing: 1px;
-  margin-bottom: 35px;
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 40px;
   color: var(--color-accent);
-  text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+  text-shadow: 0 0 10px rgba(76, 175, 80, 0.25);
+  letter-spacing: 0.8px;
+}
+
+/* 📝 Contenedor del formulario (GameForm) */
+.game-form-container {
+  background: var(--color-card-bg);
+  padding: 25px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--color-border);
+  margin-bottom: 40px;
+  animation: fadeUp 0.4s ease;
+}
+
+/* 🕹️ Lista de juegos (2 columnas por defecto) */
+.game-list-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas de igual tamaño */
+  gap: 20px;
+}
+
+/* Responsive: 1 columna en pantallas pequeñas */
+@media (max-width: 768px) {
+  .game-list-container {
+    grid-template-columns: 1fr; /* 1 columna en móviles */
+  }
+}
+
+
+/* Tarjetas (GameList → cada juego) */
+.game-card {
+  background: var(--color-card-bg);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--color-border);
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Botones */
+.button-primary {
+  padding: 10px 18px;
+  border-radius: var(--radius);
+  background: var(--color-accent);
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button-primary:hover {
+  background: var(--color-accent-dark);
+}
+
+.button-danger {
+  background: var(--color-danger);
+}
+
+.button-danger:hover {
+  background: #c62828;
+}
+
+/* ✨ Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }

@@ -31,7 +31,7 @@ useEffect(() => {
           </p>
 
           <div className="hero-buttons">
-            <a href="/library" className="hero-btn primary">Ir a la Biblioteca</a>
+            <a href="/home" className="hero-btn primary">GameTracker</a>
             <a href="/register" className="hero-btn secondary">Crear Cuenta</a>
           </div>
         </div>
@@ -120,8 +120,8 @@ useEffect(() => {
 
           <div className="cta-buttons">
             {isLogged ? (
-              <a href="/library" className="cta-btn cta-primary">
-                Ir a mi Biblioteca
+              <a href="/home" className="cta-btn cta-primary">
+                Ingresar al GameTracker
               </a>
             ) : (
               <>
@@ -172,8 +172,9 @@ useEffect(() => {
             <div className="dev-block">
               <p className="dev-name">Samuel Cano</p>
               <div className="dev-socials">
-                <a href="https://instagram.com/" target="_blank">Instagram</a>
-                <a href="https://github.com/" target="_blank">GitHub</a>
+                <a href="https://instagram.com/samuelcan0" target="_blank">Instagram</a>
+                <a href="https://github.com/SamuelC-html" target="_blank">GitHub</a>
+                <a href="https://samuelc-html.github.io/Proyecto-Portafolio-JC/" target="_blank">Portafolio</a>
               </div>
             </div>
 

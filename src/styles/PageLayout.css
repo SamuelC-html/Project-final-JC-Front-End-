@@ -1,0 +1,14 @@
+.page-layout {
+  display: grid;
+  margin-left: 260px;
+  grid-template-columns: 350px 1fr; /* 👉 Izquierda estrecha, derecha amplia */
+  gap: 25px;
+  padding: 25px;
+  max-width: 1400px;
+  margin: 40px auto;
+}
+
+/* Opcional: para que todo se alinee bonito arriba */
+.page-layout > * {
+  align-self: start;
+}

@@ -1,93 +1,55 @@
-// =======================
-// 🔐 Servicio de Autenticación
-// =======================
-
+// src/services/auth.js
 const API_URL = "http://localhost:3000/api/users";
 
-// 🧠 Registrar usuario
-export async function registerUser(nombre, email, password) {
-  try {
-    const res = await fetch(`${API_URL}/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre, email, password }),
-    });
+export async function registerUser(userData) {
+  // userData = { username, email, password }  <-- actualizado
+  const res = await fetch(`${API_URL}/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userData)
+  });
 
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(data.message || "Error al registrar usuario");
-
-    return data; // { message, token, userId }
-  } catch (error) {
-    console.error("❌ Error en registerUser:", error);
-    throw error;
-  }
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Error al registrar");
+  return data;
 }
 
-// 🔑 Iniciar sesión
 export async function loginUser(email, password) {
-  try {
-    const res = await fetch(`${API_URL}/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+  const res = await fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  });
 
-    const data = await res.json();
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Error al iniciar sesión");
 
-    if (!res.ok) throw new Error(data.message || "Error al iniciar sesión");
+  if (data.token) localStorage.setItem("token", data.token);
+  if (data.user?.id) localStorage.setItem("userId", data.user.id);
 
-    // ✅ Guardar token e ID de usuario
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("userId", data.userId);
-
-    return data;
-  } catch (error) {
-    console.error("❌ Error en loginUser:", error);
-    throw error;
-  }
+  return data;
 }
 
-// 🧾 Obtener usuario actual (si hay sesión)
 export async function getCurrentUser() {
   const token = localStorage.getItem("token");
-
   if (!token) return null;
 
-  try {
-    const res = await fetch(`${API_URL}/profile`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const res = await fetch(`${API_URL}/profile`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
 
-    if (!res.ok) return null;
-
-    const user = await res.json();
-    return user;
-  } catch (error) {
-    console.error("❌ Error al obtener usuario actual:", error);
-    return null;
-  }
+  if (!res.ok) return null;
+  return await res.json();
 }
 
-// 🚪 Cerrar sesión
-export function logoutUser() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("userId");
-}
-
-// 🔍 Verificar si el token del usuario es válido
 export async function verifyToken() {
   const token = localStorage.getItem("token");
   if (!token) return false;
 
   try {
-    const res = await fetch("http://localhost:3000/api/users/verify", {
+    const res = await fetch(`${API_URL}/verify`, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     if (!res.ok) return false;
@@ -98,4 +60,9 @@ export async function verifyToken() {
     console.error("❌ Error verificando token:", error);
     return false;
   }
+}
+
+export function logoutUser() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("userId");
 }

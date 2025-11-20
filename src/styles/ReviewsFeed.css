@@ -1,0 +1,43 @@
+.reviews-feed {
+  width: 700px;
+  margin: 20px auto;
+  color: white;
+}
+
+.feed-title {
+  color: #00ff66;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.review-card {
+  background: #111;
+  border: 1px solid #00ff66;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  transition: transform 0.2s;
+}
+
+.review-card:hover {
+  transform: scale(1.01);
+}
+
+.review-game {
+  color: #00ff66;
+  margin: 0 0 10px;
+}
+
+.review-text {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.review-rating {
+  color: #00ffaa;
+  margin-bottom: 8px;
+}
+
+.review-date {
+  opacity: 0.7;
+}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./GameForm.css";
 
 function GameForm({ selectedGame, onSave }) {
   const [titulo, setTitulo] = useState("");
@@ -9,7 +10,6 @@ function GameForm({ selectedGame, onSave }) {
   const [calificacion, setCalificacion] = useState(0);
   const [imagen, setImagen] = useState("");
 
-  // Si llega un juego para editar, llenar el formulario
   useEffect(() => {
     if (selectedGame) {
       setTitulo(selectedGame.titulo);
@@ -76,84 +76,76 @@ function GameForm({ selectedGame, onSave }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        backgroundColor: "#111",
-        padding: "20px",
-        borderRadius: "10px",
-        maxWidth: "500px",
-        margin: "20px auto",
-        border: "2px solid #00ff66",
-      }}
-    >
-      <h2 style={{ textAlign: "center", color: "#00ff66" }}>
+    <div className="game-form-container">
+      <h2 className="form-title">
         {selectedGame ? "Editar juego" : "Agregar juego"}
       </h2>
 
-      <label>Título *</label>
-      <input
-        value={titulo}
-        onChange={(e) => setTitulo(e.target.value)}
-        required
-      />
-
-      <label>Descripción</label>
-      <textarea
-        value={descripcion}
-        onChange={(e) => setDescripcion(e.target.value)}
-        rows={3}
-        style={{
-          backgroundColor: "#111",
-          border: "1px solid #00ff66",
-          color: "#0f0",
-          borderRadius: "5px",
-          padding: "10px",
-          width: "100%",
-        }}
-      />
-
-      <label>Plataforma</label>
-      <input
-        value={plataforma}
-        onChange={(e) => setPlataforma(e.target.value)}
-      />
-
-      <label>
+      <form onSubmit={handleSubmit} className="game-form">
+        <label className="form-label">Título *</label>
         <input
-          type="checkbox"
-          checked={completado}
-          onChange={(e) => setCompletado(e.target.checked)}
-          style={{ marginRight: "8px" }}
+          className="form-input"
+          value={titulo}
+          onChange={(e) => setTitulo(e.target.value)}
+          required
         />
-        Completado
-      </label>
 
-      <label>Horas jugadas</label>
-      <input
-        type="number"
-        min="0"
-        value={horasJugadas}
-        onChange={(e) => setHorasJugadas(e.target.value)}
-      />
+        <label className="form-label">Descripción</label>
+        <textarea
+          className="form-textarea"
+          rows={3}
+          value={descripcion}
+          onChange={(e) => setDescripcion(e.target.value)}
+        />
 
-      <label>Calificación (0 a 5 estrellas)</label>
-      <input
-        type="number"
-        min="0"
-        max="5"
-        step="0.5"
-        value={calificacion}
-        onChange={(e) => setCalificacion(e.target.value)}
-      />
+        <label className="form-label">Plataforma</label>
+        <input
+          className="form-input"
+          value={plataforma}
+          onChange={(e) => setPlataforma(e.target.value)}
+        />
 
-      <label>URL de imagen</label>
-      <input value={imagen} onChange={(e) => setImagen(e.target.value)} />
+        <label className="form-checkbox">
+          Completado
+          <input
+            type="checkbox"
+            checked={completado}
+            onChange={(e) => setCompletado(e.target.checked)}
+          />
+        </label>
 
-      <button type="submit" style={{ marginTop: "15px" }}>
-        {selectedGame ? "Actualizar" : "Agregar"}
-      </button>
-    </form>
+        <label className="form-label">Horas jugadas</label>
+        <input
+          className="form-input"
+          type="number"
+          min="0"
+          value={horasJugadas}
+          onChange={(e) => setHorasJugadas(e.target.value)}
+        />
+
+        <label className="form-label">Calificación (0 a 5)</label>
+        <input
+          className="form-input"
+          type="number"
+          min="0"
+          max="5"
+          step="0.5"
+          value={calificacion}
+          onChange={(e) => setCalificacion(e.target.value)}
+        />
+
+        <label className="form-label">URL de imagen</label>
+        <input
+          className="form-input"
+          value={imagen}
+          onChange={(e) => setImagen(e.target.value)}
+        />
+
+        <button type="submit" className="button-primary form-submit">
+          {selectedGame ? "Actualizar" : "Agregar"}
+        </button>
+      </form>
+    </div>
   );
 }
 

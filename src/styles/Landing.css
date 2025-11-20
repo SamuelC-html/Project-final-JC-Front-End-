@@ -1,5 +1,10 @@
+:root {
+  --nav-height: 72px; /* fallback si JS no ha corrido aún */
+}
+
 .landing-container {
-  min-height: 100vh;
+  padding-top: var(--nav-height);
+  min-height: calc(100vh - var(--nav-height));
 }
 
 /* ============================

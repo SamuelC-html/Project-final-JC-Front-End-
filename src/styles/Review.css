@@ -1,0 +1,32 @@
+.reviews-page {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  margin: 70px auto;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Parte izquierda: formulario */
+.reviews-left {
+  position: sticky;
+  top: 20px; 
+  height: fit-content;
+}
+
+/* Parte derecha: lista */
+.reviews-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .reviews-page {
+    grid-template-columns: 1fr;
+  }
+
+  .reviews-left {
+    position: static;
+  }
+}
