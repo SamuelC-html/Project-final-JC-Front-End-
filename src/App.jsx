@@ -11,6 +11,7 @@ import Devs from "./pages/Devs";
 import ReviewPage from "./pages/ReviewPage";
 import UserHome from "./pages/UserHome";
 import Profile from "./pages/Profile";
+import Estadisticas from "./pages/EstadisticasPage";
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
         <Route path="/reviews" element={<ReviewPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/devs" element={<Devs />} />
+        <Route path="/estadisticas" element={ <ProtectedRoute><Estadisticas /></ProtectedRoute> }/>
         <Route path="/profile" element={ <ProtectedRoute><Profile /></ProtectedRoute> }/>
       </Routes>
     </>

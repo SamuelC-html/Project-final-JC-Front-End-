@@ -1,0 +1,44 @@
+/* Este CSS es para la página de Estadísticas */
+.estadisticas-container {
+  padding: 2rem;
+  background-color: #11271463; 
+  color: #FFFFFF;
+  min-height: 100vh; /* Que ocupe toda la altura */
+}
+
+.estadisticas-container h1 {
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  color: #E0E0E0;
+}
+
+/* Este 'wrapper' es importante para que el gráfico 
+  tenga un tamaño definido y no crezca infinitamente.
+*/
+.chart-wrapper {
+  position: relative;
+  height: 60vh;
+  width: 90%; 
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-bottom: 3rem; 
+  background-color: #0a140d;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.loading-text {
+  font-size: 1.2rem;
+  color: #E0E0E0;
+}
+
+.error-text {
+  font-size: 1.2rem;
+  color: #FF6B6B; /* Un color rojo para errores */
+  font-weight: 500;
+}

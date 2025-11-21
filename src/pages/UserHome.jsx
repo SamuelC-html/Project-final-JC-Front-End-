@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/UserHome.css";
@@ -38,6 +39,7 @@ export default function UserHome() {
             <Link to="/profile">⚙ Mi Perfil</Link>
             <Link to="/library">📚 Biblioteca</Link>
             <Link to="/reviews">⭐ Reseñas</Link>
+            <Link to="/estadisticas">📊 Estadisticas</Link>
           </div>
         </div>
       </aside>
@@ -59,6 +61,14 @@ export default function UserHome() {
             <h3>Reseñas</h3>
             <p>Administra tus opiniones y califica tus juegos.</p>
           </div>
+        </Link>
+        
+        <Link to="/estadisticas" className= "feed-card">
+        <div className="feed-icon">📊</div>
+        <div>
+            <h3>Estadisticas</h3>
+            <p> Analiza el tiempo invertido en tus juegos favoritos</p>
+        </div>
         </Link>
 
         <Link to="/profile" className="feed-card">
